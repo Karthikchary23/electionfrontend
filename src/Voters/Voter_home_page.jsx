@@ -15,7 +15,7 @@ export default function Voter_Homepage() {
   useEffect(() => {
     // Fetch candidates/users
     axios
-      .get("http://localhost:5000/getusers")
+      .get("https://epbackend.onrender.com/getusers")
       .then((response) => {
         setUsers(response.data); 
       })
@@ -27,7 +27,7 @@ export default function Voter_Homepage() {
 
     // Fetch voter details to check if they've already voted
     axios
-      .get(`http://localhost:5000/voterdetails`, {
+      .get(`https://epbackend.onrender.com/voterdetails`, {
         params: { checkAadhar: aadharId },
       })
       .then((response) => {
@@ -56,7 +56,7 @@ export default function Voter_Homepage() {
 
       // Send the vote to the backend to update the database
       axios
-        .post("http://localhost:5000/vote", { userId, aadhar, address })
+        .post("https://epbackend.onrender.com/vote", { userId, aadhar, address })
         .then(() => {
           console.log("Vote successfully recorded");
 
@@ -170,7 +170,7 @@ export default function Voter_Homepage() {
               style={{ height: "250px", width: "200px" }}
             >
               <img
-                src={`http://localhost:5000/uploads/${user.image}`}
+                src={`https://epbackend.onrender.com/uploads/${user.image}`}
                 alt={user.name}
                 className="w-full h-1/2 object-cover mb-4 rounded-md"
               />
