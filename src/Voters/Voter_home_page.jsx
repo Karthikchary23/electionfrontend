@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function Voter_Homepage() {
   const [voterName, setVoterName] = useState("");
   const [users, setUsers] = useState([]);
-  const [votedCandidate, setVotedCandidate] = useState(null); 
+  const [votedCandidate, setVotedCandidate] = useState(null);
   const [aadhar, setaadhar] = useState("");
-  const [voted, setVoted] = useState(false); 
+  const [voted, setVoted] = useState(false);
   const [address, setAddress] = useState("");
-  const [searchTerm, setSearchTerm] = useState(""); 
-  const [selectedArea, setSelectedArea] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedArea, setSelectedArea] = useState("");
 
   useEffect(() => {
     // Fetch candidates/users
     axios
       .get("https://epbackend.onrender.com/getusers")
       .then((response) => {
-        setUsers(response.data); 
+        setUsers(response.data);
       })
       .catch((err) => console.log(err));
 
@@ -31,7 +31,6 @@ export default function Voter_Homepage() {
         params: { checkAadhar: aadharId },
       })
       .then((response) => {
-       
         setAddress(response.data.address);
         if (response.data.votedCandidates) {
           alert("already voted");
@@ -50,7 +49,6 @@ export default function Voter_Homepage() {
     // Disable right-click
     document.addEventListener("contextmenu", (e) => e.preventDefault());
 
-    
     const disableKeys = (e) => {
       if (
         e.key === "F12" || // Disable F12
@@ -79,7 +77,11 @@ export default function Voter_Homepage() {
 
       // Send the vote to the backend to update the database
       axios
-        .post("https://epbackend.onrender.com/vote", { userId, aadhar, address })
+        .post("https://epbackend.onrender.com/vote", {
+          userId,
+          aadhar,
+          address,
+        })
         .then(() => {
           console.log("Vote successfully recorded");
 
@@ -126,79 +128,76 @@ export default function Voter_Homepage() {
   const navigate = useNavigate();
   const handleLogout = () => {
     // Show confirmation dialog
-    const confirmed = window.confirm('Are you sure you want to logout?');
-  
+    const confirmed = window.confirm("Are you sure you want to logout?");
+
     if (confirmed) {
       // Clear local storage if confirmed
       localStorage.clear();
-  
+
       // Navigate to the home page
-      navigate('/');
+      navigate("/");
     } else {
       // Do nothing if cancelled
-      return; 
+      return;
     }
   };
   return (
     <div className="flex flex-col items-start justify-start min-h-screen bg-gray-900 text-white">
-      
       <div className="flex justify-between items-center  w-full">
-  <div className="px-6">
-    <h1 className="text-2xl font-bold text-white">
-      Welcome, {voterName}! from {address}
-    </h1>
-  </div>
-  <div className="right-5">
-    <button 
-      onClick={handleLogout} 
-      className="text-white mt-3  bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-    >
-      Logout
-    </button>
-  </div>
-</div>
+        <div className="px-6">
+          <h1 className="text-2xl font-bold text-white">
+            Welcome, {voterName}! from {address}
+          </h1>
+        </div>
+        <div className="right-5">
+          <button
+            onClick={handleLogout}
+            className="text-white mt-3  bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
 
-        
       <div className="mt-8 w-full px-6">
         {/* Search bar */}
-        
 
         {/* Dropdown to filter by area */}
         <select
-  value={selectedArea}
-  onChange={(e) => setSelectedArea(e.target.value)}
-  className="mb-4 p-2 rounded w-60 bg-gray-800 text-white"
->
-  <option value="">All Areas</option>
-  {Object.keys(groupedCandidates)
-    .filter((area) => area === address) // Filter to show only the voter's area as default
-    .map((area) => (
-      <option key={area} value={area}>
-        {area}
-      </option>
-    ))}
-  {Object.keys(groupedCandidates)
-    .filter((area) => area !== address) // Show other areas after the voter's area
-    .map((area) => (
-      <option key={area} value={area}>
-        {area}
-      </option>
-    ))}
-</select>
+          value={selectedArea}
+          onChange={(e) => setSelectedArea(e.target.value)}
+          className="mb-4 p-2 rounded w-60 bg-gray-800 text-white"
+        >
+          <option value="">All Areas</option>
+          {Object.keys(groupedCandidates)
+            .filter((area) => area === address) // Filter to show only the voter's area as default
+            .map((area) => (
+              <option key={area} value={area}>
+                {area}
+              </option>
+            ))}
+          {Object.keys(groupedCandidates)
+            .filter((area) => area !== address) // Show other areas after the voter's area
+            .map((area) => (
+              <option key={area} value={area}>
+                {area}
+              </option>
+            ))}
+        </select>
         <input
           type="text"
           placeholder="Search by candidate name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="mb-4 p-2 rounded ml-5  w-1/2 bg-gray-800 text-white placeholder-gray-400"
+          className="mb-4 p-2 rounded ml-5   bg-gray-800 text-white placeholder-gray-400 w-3/4"
         />
 
         {/* Iterate over filtered candidates */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 m-2">
           {filteredCandidates.map((user) => (
             <div
               key={user._id}
-              className="bg-gray-800 p-4 rounded-lg shadow-md"
+              className="bg-gray-800 p-4 rounded-lg shadow-md m-2"
               style={{ height: "250px", width: "200px" }}
             >
               <img
@@ -214,13 +213,24 @@ export default function Voter_Homepage() {
                   onClick={() => voteCount(user._id)}
                   disabled={voted} // Disable all buttons if the user has already voted
                   className={`py-1 px-2 text-xs rounded ${
-                    votedCandidate === user._id && voted
-                      ? "bg-green-500"
-                      : ""
-                  } text-white hover:bg-gray-700`}            style={{ width: '40px', height: '40px' }}
+                    votedCandidate === user._id && voted ? "bg-green-500" : ""
+                  } text-white hover:bg-gray-700`}
+                  style={{ width: "40px", height: "40px" }}
                   // Green if this candidate was successfully voted for
                 >
-                  {votedCandidate === user._id && voted ? <img src="/vote.gif" alt="Edit" className="w-full h-full object-contain" /> : <img src="/vote.gif" alt="Edit" className="w-full h-full object-contain" />}
+                  {votedCandidate === user._id && voted ? (
+                    <img
+                      src="/vote.gif"
+                      alt="Edit"
+                      className="w-full h-full object-contain"
+                    />
+                  ) : (
+                    <img
+                      src="/vote.gif"
+                      alt="Edit"
+                      className="w-full h-full object-contain"
+                    />
+                  )}
                 </button>
               </div>
             </div>
