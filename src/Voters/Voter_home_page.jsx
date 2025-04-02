@@ -47,10 +47,10 @@ export default function Voter_Homepage() {
         console.log(err);
       });
 
-    // Disable right-click
+    
     document.addEventListener("contextmenu", (e) => e.preventDefault());
 
-    // Disable specific key combinations
+    
     const disableKeys = (e) => {
       if (
         e.key === "F12" || // Disable F12
