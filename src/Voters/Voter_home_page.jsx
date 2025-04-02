@@ -47,7 +47,7 @@ export default function Voter_Homepage() {
         console.log(err);
       });
 
-    
+    // Disable right-click
     document.addEventListener("contextmenu", (e) => e.preventDefault());
 
     
@@ -165,17 +165,26 @@ export default function Voter_Homepage() {
 
         {/* Dropdown to filter by area */}
         <select
-          value={selectedArea}
-          onChange={(e) => setSelectedArea(e.target.value)}
-          className="mb-4 p-2 rounded w-60 bg-gray-800 text-white"
-        >
-          <option value="">All Areas</option>
-          {Object.keys(groupedCandidates).map((area) => (
-            <option key={area} value={area}>
-              {area}
-            </option>
-          ))}
-        </select>
+  value={selectedArea}
+  onChange={(e) => setSelectedArea(e.target.value)}
+  className="mb-4 p-2 rounded w-60 bg-gray-800 text-white"
+>
+  <option value="">All Areas</option>
+  {Object.keys(groupedCandidates)
+    .filter((area) => area === address) // Filter to show only the voter's area as default
+    .map((area) => (
+      <option key={area} value={area}>
+        {area}
+      </option>
+    ))}
+  {Object.keys(groupedCandidates)
+    .filter((area) => area !== address) // Show other areas after the voter's area
+    .map((area) => (
+      <option key={area} value={area}>
+        {area}
+      </option>
+    ))}
+</select>
         <input
           type="text"
           placeholder="Search by candidate name..."
@@ -185,7 +194,7 @@ export default function Voter_Homepage() {
         />
 
         {/* Iterate over filtered candidates */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {filteredCandidates.map((user) => (
             <div
               key={user._id}
