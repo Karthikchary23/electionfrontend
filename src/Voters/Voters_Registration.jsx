@@ -49,7 +49,7 @@ const RegistrationForm = () => {
     }
 
     try {
-      const response = await axios.post("https://epbackend.onrender.com/send-otp", {
+      const response = await axios.post("http://localhost:5000/send-otp", {
         email,
       });
       // setMessage(response.data.message);
@@ -85,7 +85,7 @@ const RegistrationForm = () => {
   };
   const handleVerifyOtp = async () => {
     try {
-      const response = await axios.post("https://epbackend.onrender.com/verify-otp", {
+      const response = await axios.post("http://localhost:5000/verify-otp", {
         email,
         otp,
       });
@@ -129,7 +129,7 @@ const RegistrationForm = () => {
 
   const onSubmit = (data) => {
     axios
-      .post("https://epbackend.onrender.com/register", data)
+      .post("http://localhost:5000/register", data)
       .then((response) => {
         // console.log(response.data);
         reset(); // Clear the form fields after submitting
