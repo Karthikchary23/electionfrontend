@@ -13,6 +13,7 @@ import Position from './Admin/Position';
 import Add_candidates from './Admin/Add_candidates';
 import Contact from './Voters/Contact';
 import Results from './Admin/Results';
+import ProtectedRoutevoter from './Voters/ProtectedRoute';
 
 function App() {
   
@@ -32,7 +33,11 @@ function App() {
     },
     {
       path: '/voterhomepage',
-      element: <><LoadPage /><Voter_home_page /></>
+      element: (
+        <ProtectedRoutevoter>
+          <><LoadPage /><Voter_home_page /></>
+        </ProtectedRoutevoter>
+      )
     },
     {
       path: '/contact',
