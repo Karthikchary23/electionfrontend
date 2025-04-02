@@ -230,8 +230,8 @@ const AddCandidate = () => {
               {candidates.map((candidate) => (
                 <div
                   key={candidate._id}
-                  className="border-white border-[2px] p-4 rounded-lg shadow-md bg-gray-500 bg-opacity-10  h-[220px] w-[160px] 
-                       md:h-[250px] md:w-[180px] 
+                  className="border-white border-[2px] p-4 rounded-lg shadow-md bg-gray-500 bg-opacity-10  h-[250px] w-[160px] 
+                       md:h-[280px] md:w-[180px] 
                        lg:h-[280px] lg:w-[200px]"
                  
                 >
