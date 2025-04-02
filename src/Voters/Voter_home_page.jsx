@@ -196,10 +196,12 @@ export default function Voter_Homepage() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 m-2">
           {filteredCandidates.map((user) => (
             <div
-              key={user._id}
-              className="bg-gray-800 p-4 rounded-lg shadow-md m-2"
-              style={{ height: "250px", width: "200px" }}
-            >
+            key={user._id}
+            className="bg-gray-800 p-2 rounded-lg shadow-md m-1 
+                       h-[220px] w-[160px] 
+                       md:h-[250px] md:w-[180px] 
+                       lg:h-[280px] lg:w-[200px]"
+          >
               <img
                 src={`https://epbackend.onrender.com/uploads/${user.image}`}
                 alt={user.name}
