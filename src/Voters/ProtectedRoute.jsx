@@ -8,6 +8,10 @@ export default function ProtectedRoutevoter({ children }) {
     // Redirect to login page if aadhar is not present
     return <Navigate to="/" />;
   }
+  else
+  {
+    return <Navigate to="/voterhomepage" />;
+  }
 
   // Render the protected component if aadhar is present
   return children;
